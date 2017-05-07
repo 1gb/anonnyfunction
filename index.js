@@ -11,7 +11,6 @@ fs.readFile(filename, 'utf8', function(err, data) {
   if (err) throw err;
   console.log('OK: ' + filename);
   inputText = data;
-  generateFirstPartOfTweet();
 });
 
 var bot = new Twit({
