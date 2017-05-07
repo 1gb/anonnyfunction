@@ -32,7 +32,6 @@ function generateFirstPartOfTweet() {
   lastWord = lastWord.replace(/[.,\/#!?$%\^&\*;:{}=\-_`~()]/g,'');
   if (lastWord.length <= 2) {
     console.log('word too short:', lastWord);
-    return;
   } else {
     getRhyme(lastWord);
   }
@@ -48,7 +47,6 @@ function getRhyme(rhymeMe) {
       console.log('Error: ' + error);
     } else if (JSON.parse(response.body).length === 0){
       console.log('no good rhyme words.');
-      return;
     } else {
       var result = JSON.parse(response.body);
       var rhymeWord = result[0].word;
@@ -58,7 +56,6 @@ function getRhyme(rhymeMe) {
 
       if (rhymeWord.length <= 2) {
         console.log('word too short:', rhymeWord);
-        return;
       } else {
         generateSecondPartOfTweet(rhymeWord);
       }
