@@ -38,7 +38,7 @@ function generateFirstPartOfTweet() {
 }
 
 function pickRandomNumber1to3() {
-  return Math.floor(Math.random() * 6) + 1;
+  return Math.floor(Math.random() * 3) + 1;
 }
 
 function getRhyme(rhymeMe) {
@@ -49,9 +49,9 @@ function getRhyme(rhymeMe) {
       console.log('no good rhyme words.');
     } else {
       var result = JSON.parse(response.body);
-      var rhymeWord = result[0].word;
+      var rhymeWord = result[0].word + '.';
       if (result.length > 2) {
-        rhymeWord = result[pickRandomNumber1to3()].word;
+        rhymeWord = result[pickRandomNumber1to3()].word + '.';
       }
 
       if (rhymeWord.length <= 2) {
@@ -63,8 +63,7 @@ function getRhyme(rhymeMe) {
   });
 }
 
-function generateSecondPartOfTweet(result) {
-  word = result + '.';
+function generateSecondPartOfTweet(word) {
   var markov = new rita.RiMarkov(3);
   markov.loadText(inputText);
   var sentence2 = markov.generateSentences(1);
