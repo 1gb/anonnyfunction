@@ -38,8 +38,6 @@ https://www.gutenberg.org/ebooks/12242
 
 All of the above from Project Gutenberg: www.gutenberg.org
 
-## Todo:
+### Todo:
 
-* Not tweet if there's no rhyme found...
-* Refactor to make all the functions anonymous
 * If somebody tweets at it, make up a poem that rhymes with their name (twitter handle? display name?)
