@@ -8,8 +8,9 @@ var textData = fs.readFileSync(filename, 'utf8');
 var lexicon = new rita.RiLexicon();
 generateFirstPartOfTweet();
 
+
 function generateFirstPartOfTweet() {
-  var markov = new rita.RiMarkov(3);
+  var markov = new rita.RiMarkov(4);
   markov.loadText(textData);
   var sentences = markov.generateSentences(2);
   var sen1 = sentences[0].split(' ');
@@ -45,6 +46,14 @@ function generateFirstPartOfTweet() {
 }
 
 function sendTheDangTweet(tweet) {
+  var bot = new Twit({
+    consumer_key: process.env.NONNYFUNC_CONSUMER_KEY,
+    consumer_secret: process.env.NONNYFUNC_CONSUMER_SECRET,
+    access_token: process.env.NONNYFUNC_ACCESS_TOKEN,
+    access_token_secret: process.env.NONNYFUNC_ACCESS_TOKEN_SECRET,
+    timeout_ms: 60 * 1000
+  });
+
   bot.post('statuses/update', {
     status: tweet
   },
