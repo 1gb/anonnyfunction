@@ -10,40 +10,49 @@ generateFirstPartOfTweet();
 
 
 function generateFirstPartOfTweet() {
-  var markov = new rita.RiMarkov(4);
-  markov.loadText(textData);
-  var sentences = markov.generateSentences(2);
-  var sen1 = sentences[0].split(' ');
-  var sen2 = sentences[1].split(' ');
-  var sen1lastWord = sen1[sen1.length - 1];
-  var sen2lastWord = sen2[sen2.length - 1];
-  var matchFound = false;
-  sen1.pop();
-  sen2.pop();
-  sen1lastWord = rita.trimPunctuation(sen1lastWord);
-  sen2lastWord = rita.trimPunctuation(sen2lastWord);
-  sen1.push(sen1lastWord);
-  console.log(sen1lastWord, sen2lastWord);
+  var j = 0;
 
-  var completions = markov.getCompletions(sen2);
-  for (i = 0; i < completions.length; i++) {
-    if (lexicon.isRhyme(sen1lastWord, completions[i])) {
-      sen2.push(completions[i]);
-      console.log('Match found!', sen1lastWord, completions[i]);
-      matchFound = true;
+  while (j < 100) {
+    var markov = new rita.RiMarkov(4);
+    markov.loadText(textData);
+    var sentences = markov.generateSentences(2);
+    var sen1 = sentences[0].split(' ');
+    var sen2 = sentences[1].split(' ');
+    var sen1lastWord = sen1[sen1.length - 1];
+    var sen2lastWord = sen2[sen2.length - 1];
+    var matchFound = false;
+    sen1.pop();
+    sen2.pop();
+    sen1lastWord = rita.trimPunctuation(sen1lastWord);
+    sen2lastWord = rita.trimPunctuation(sen2lastWord);
+    sen1.push(sen1lastWord);
+    console.log(sen1lastWord, sen2lastWord);
 
-      sen1 = sen1.join(' ');
-      sen2 = sen2.join(' ');
-      var tweet = sen1 + '\n' + sen2;
-      sendTheDangTweet(tweet);
+    var completions = markov.getCompletions(sen2);
+
+    for (i = 0; i < completions.length; i++) {
+      console.log('sub-try: ' + i + ' out of ' + completions.length);
+      if (lexicon.isRhyme(sen1lastWord, completions[i])) {
+        sen2.push(completions[i]);
+        console.log('Match found!', sen1lastWord, completions[i]);
+        matchFound = true;
+
+        sen1 = sen1.join(' ');
+        sen2 = sen2.join(' ');
+        var tweet = sen1 + '\n' + sen2;
+        console.log(tweet);
+        // sendTheDangTweet(tweet);
+      }
     }
-  }
 
-  if (matchFound === false) {
-    console.log('No match found. Trying again.');
-    generateFirstPartOfTweet();
+    if (matchFound === false) {
+      console.log('No match found. Trying again. ' + j);
+    }
+
+    j++;
   }
 }
+
 
 function sendTheDangTweet(tweet) {
   var bot = new Twit({
