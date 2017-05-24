@@ -12,7 +12,7 @@ generateFirstPartOfTweet();
 function generateFirstPartOfTweet() {
   var j = 0;
 
-  while (j < 100) {
+  while (j < 20) {
     var markov = new rita.RiMarkov(4);
     markov.loadText(textData);
     var sentences = markov.generateSentences(2);
@@ -20,33 +20,32 @@ function generateFirstPartOfTweet() {
     var sen2 = sentences[1].split(' ');
     var sen1lastWord = sen1[sen1.length - 1];
     var sen2lastWord = sen2[sen2.length - 1];
-    var matchFound = false;
     sen1.pop();
     sen2.pop();
     sen1lastWord = rita.trimPunctuation(sen1lastWord);
     sen2lastWord = rita.trimPunctuation(sen2lastWord);
     sen1.push(sen1lastWord);
-    console.log(sen1lastWord, sen2lastWord);
+    sen2lastWordPos = rita.getPosTags(sen2lastWord);
+    var rhymes = lexicon.rhymes(sen1lastWord);
 
-    var completions = markov.getCompletions(sen2);
+    if  (rhymes.length > 100) {
+      rhymes.length = 100;
+    }
 
-    for (i = 0; i < completions.length; i++) {
-      console.log('sub-try: ' + i + ' out of ' + completions.length);
-      if (lexicon.isRhyme(sen1lastWord, completions[i])) {
-        sen2.push(completions[i]);
-        console.log('Match found!', sen1lastWord, completions[i]);
-        matchFound = true;
+    for (i = 0; i < rhymes.length; i++) {
+      sen2newPos = rita.getPosTags(rhymes[i]);
+      // console.log('sub-try: ' + i + ' out of ' + rhymes.length);
+      if (sen2lastWordPos[0] === sen2newPos[0]) {
+        sen2.push(rhymes[i]);
+        // console.log('Match found!', sen2lastWord, rhymes[i], rita.getPosTags(rhymes[i]));
 
         sen1 = sen1.join(' ');
         sen2 = sen2.join(' ');
         var tweet = sen1 + '\n' + sen2;
-        console.log(tweet);
-        // sendTheDangTweet(tweet);
+        j = 20;
+        sendTheDangTweet(tweet);
+        break;
       }
-    }
-
-    if (matchFound === false) {
-      console.log('No match found. Trying again. ' + j);
     }
 
     j++;
