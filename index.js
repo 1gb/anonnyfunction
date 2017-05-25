@@ -6,10 +6,19 @@ var rita = require('rita');
 var filename = 'combined.txt';
 var textData = fs.readFileSync(filename, 'utf8');
 var lexicon = new rita.RiLexicon();
-generateFirstPartOfTweet();
+generateTweet();
 
+function shuffleArray(array) {
+    for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+    return array;
+}
 
-function generateFirstPartOfTweet() {
+function generateTweet() {
   var j = 0;
 
   while (j < 20) {
@@ -28,8 +37,10 @@ function generateFirstPartOfTweet() {
     sen2lastWordPos = rita.getPosTags(sen2lastWord);
     var rhymes = lexicon.rhymes(sen1lastWord);
 
-    if  (rhymes.length > 100) {
-      rhymes.length = 100;
+    rhymes = shuffleArray(rhymes);
+    
+    if  (rhymes.length > 200) {
+      rhymes.length = 200;
     }
 
     for (i = 0; i < rhymes.length; i++) {
@@ -43,7 +54,8 @@ function generateFirstPartOfTweet() {
         sen2 = sen2.join(' ');
         var tweet = sen1 + '\n' + sen2;
         j = 20;
-        sendTheDangTweet(tweet);
+        console.log(tweet);
+        // sendTweet(tweet);
         break;
       }
     }
@@ -52,8 +64,7 @@ function generateFirstPartOfTweet() {
   }
 }
 
-
-function sendTheDangTweet(tweet) {
+function sendTweet(tweet) {
   var bot = new Twit({
     consumer_key: process.env.NONNYFUNC_CONSUMER_KEY,
     consumer_secret: process.env.NONNYFUNC_CONSUMER_SECRET,

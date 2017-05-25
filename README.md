@@ -2,7 +2,7 @@
 
 A Twitter bot that tweets poetry using markov strings generated from the works of various COOL POETS.
 
-Uses Node, twit, RiTa, Request, and the RhymeBrain API.
+Uses Node.js, twit, RiTa, Request
 
 Poets: Walt Whitman, T.S. Eliot, Rainer Maria Rilke, William Anderson, John Keats, Gerard Manley Hopkins, Emily Dickinson
 
@@ -37,6 +37,11 @@ https://www.gutenberg.org/ebooks/12242
 
 
 All of the above from Project Gutenberg: www.gutenberg.org
+
+### Version Notes:
+V2.1 : Makes better poems by making sure rhymes match the part of speech of the replaced word
+V2.0 : Uses RiTa to get rhymes instead.
+V1.0 : Uses the RhymeBrain API to get rhymes
 
 ### Todo:
 
