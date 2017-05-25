@@ -38,7 +38,7 @@ function generateTweet() {
     var rhymes = lexicon.rhymes(sen1lastWord);
 
     rhymes = shuffleArray(rhymes);
-    
+
     if  (rhymes.length > 200) {
       rhymes.length = 200;
     }
@@ -55,7 +55,7 @@ function generateTweet() {
         var tweet = sen1 + '\n' + sen2;
         j = 20;
         console.log(tweet);
-        // sendTweet(tweet);
+        sendTweet(tweet);
         break;
       }
     }
