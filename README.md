@@ -1,5 +1,7 @@
 ## A Nonny Function
 
+https://twitter.com/anonnyfunction
+
 A Twitter bot that tweets poetry using markov strings generated from the works of various COOL POETS.
 
 Uses Node.js, twit, RiTa, Request
