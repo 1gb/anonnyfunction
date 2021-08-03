@@ -45,6 +45,3 @@ V2.1 : Makes better poems by making sure rhymes match the part of speech of the 
 V2.0 : Uses RiTa to get rhymes instead.
 V1.0 : Uses the RhymeBrain API to get rhymes
 
-### Todo:
-
-* If somebody tweets at it, make up a poem that rhymes with their name (twitter handle? display name?)
